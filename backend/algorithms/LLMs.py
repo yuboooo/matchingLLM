@@ -8,7 +8,7 @@ import anthropic
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 # Construct the path to the .password file
-password_file_path = os.path.join(dir_path, '.password')  # Adjust according to the actual location
+password_file_path = os.path.join(dir_path, '.env')  # Adjust according to the actual location
 
 # Now open the file
 with open(password_file_path, 'r') as file:
