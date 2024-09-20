@@ -4,9 +4,26 @@ import random
 import json
 import anthropic
 
-client = OpenAI(api_key="sk-proj-d89oQELiu2WEs9jTONaoT3BlbkFJ6QS4F38FTt4pCzISS4NJ")
-ANTHROPIC_API_KEY="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"
-client_a = anthropic.Client(api_key=ANTHROPIC_API_KEY)
+# Get the directory of the currently executing script
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+# Construct the path to the .password file
+password_file_path = os.path.join(dir_path, '.password')  # Adjust according to the actual location
+
+# Now open the file
+with open(password_file_path, 'r') as file:
+    for line in file:
+        key, value = line.strip().split('=')
+        os.environ[key] = value  # Optionally set as environment variable
+
+
+# Now you can access your API keys
+openai_api_key = os.getenv('OPENAI_API_KEY')
+anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
+
+
+client = OpenAI(api_key=openai_api_key)
+client_a = anthropic.Client(api_key=anthropic_api_key)
 
 
 def generate_prompt(preferences, matching_solutions, matching_process):
@@ -31,7 +48,7 @@ def generate_prompt(preferences, matching_solutions, matching_process):
 
     Your explanation should strictly based on the fact (matching_solution & matching_process) provided above.
     Please wrap up your response in a understandable and clear manner.
-    
+
     Show each round of proposals, acceptances, and rejections until the algorithm terminates. 
     Explain the reasoning behind each decision and how the matching evolves in each step.
     Finally, present the final stable matching and explain why it is stable.
