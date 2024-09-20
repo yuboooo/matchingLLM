@@ -4,22 +4,12 @@ import random
 import json
 import anthropic
 
-# Get the directory of the currently executing script
-dir_path = os.path.dirname(os.path.realpath(__file__))
+from dotenv import load_dotenv
+load_dotenv()  # This loads environment variables from .env
 
-# Construct the path to the .password file
-password_file_path = os.path.join(dir_path, '.env')  # Adjust according to the actual location
-
-# Now open the file
-with open(password_file_path, 'r') as file:
-    for line in file:
-        key, value = line.strip().split('=')
-        os.environ[key] = value  # Optionally set as environment variable
-
-
-# Now you can access your API keys
 openai_api_key = os.getenv('OPENAI_API_KEY')
 anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
+
 
 
 client = OpenAI(api_key=openai_api_key)
